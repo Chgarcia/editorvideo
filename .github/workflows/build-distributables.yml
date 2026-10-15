@@ -1,0 +1,73 @@
+name: Build distributables
+
+on:
+  workflow_dispatch:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install FFmpeg and PyInstaller
+        run: |
+          choco install ffmpeg -y --no-progress
+          python -m pip install --upgrade pyinstaller
+      - name: Build Windows package
+        run: .\build_exe.bat
+      - name: Rename manifest
+        run: Rename-Item dist\version.json version-windows.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: editvideo-windows
+          path: |
+            dist/editvideo.exe
+            dist/editvideo-windows.zip
+            dist/version-windows.json
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install FFmpeg and PyInstaller
+        run: |
+          brew install ffmpeg
+          python3 -m pip install --upgrade pyinstaller
+      - name: Build macOS package
+        run: bash build_macos.sh
+      - name: Rename manifest
+        run: mv dist/version.json dist/version-macos.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: editvideo-macos
+          path: |
+            dist/editvideomac.zip
+            dist/version-macos.json
+
+  publish-bundle:
+    needs: [windows, macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Merge version manifests
+        run: |
+          mkdir -p editvideo
+          python3 updater.py merge editvideo/version.json artifacts/version-windows.json artifacts/version-macos.json
+          cp artifacts/editvideo.exe artifacts/editvideomac.zip editvideo/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: editvideo-publicar
+          path: editvideo/

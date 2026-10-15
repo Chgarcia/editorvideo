@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Manual de usuario del aplicativo institucional Muteador y desenfoque de video.">
+  <title>Manual de usuario | Muteador y desenfoque de video</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #183653;
+      --blue: #245b82;
+      --gold: #b28a45;
+      --ink: #263442;
+      --muted: #5e6c78;
+      --line: #d8e0e6;
+      --pale: #f2f6f8;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: #edf1f4;
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.58;
+    }
+    a { color: var(--blue); }
+    .document {
+      width: min(210mm, 100%);
+      margin: 24px auto;
+      background: var(--white);
+      box-shadow: 0 8px 30px #18365318;
+    }
+    .cover {
+      min-height: 275mm;
+      padding: 22mm 22mm 18mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: var(--white);
+      background:
+        linear-gradient(145deg, #183653 0%, #214e70 64%, #27627d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::after {
+      content: "";
+      width: 125mm;
+      height: 125mm;
+      border: 1px solid #ffffff20;
+      border-radius: 50%;
+      position: absolute;
+      right: -62mm;
+      bottom: -48mm;
+      box-shadow: 0 0 0 18mm #ffffff08, 0 0 0 38mm #ffffff06;
+    }
+    .identity {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #ffffff50;
+      color: #f5f7f8;
+      font-size: 9pt;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .identity-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid #e1c58f;
+      display: grid;
+      place-items: center;
+      color: #e1c58f;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    .cover-main { max-width: 150mm; position: relative; z-index: 1; }
+    .eyebrow {
+      color: #e1c58f;
+      font-size: 10pt;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 13px 0 14px;
+      font-size: 33pt;
+      font-weight: 650;
+      letter-spacing: -.035em;
+      line-height: 1.12;
+    }
+    .cover-subtitle {
+      max-width: 125mm;
+      color: #e0e8ed;
+      font-size: 14pt;
+      line-height: 1.5;
+    }
+    .cover-rule { width: 32mm; height: 3px; margin: 22px 0; background: #d8b778; }
+    .cover-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 22px;
+      max-width: 125mm;
+      margin-top: 34px;
+    }
+    .cover-meta div { padding-top: 8px; border-top: 1px solid #ffffff45; }
+    .cover-meta dt {
+      margin-bottom: 3px;
+      color: #cbd8e0;
+      font-size: 8pt;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .cover-meta dd { margin: 0; font-size: 10pt; }
+    .cover-foot {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      color: #d6e0e6;
+      font-size: 8.5pt;
+    }
+    .content { padding: 15mm 20mm 20mm; }
+    .docbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 22px;
+      padding: 0 0 8px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 8pt;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 30px 0 12px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+      color: var(--navy);
+      font-size: 19pt;
+      font-weight: 650;
+      line-height: 1.25;
+      break-after: avoid;
+    }
+    h3 {
+      margin: 22px 0 7px;
+      color: var(--blue);
+      font-size: 13pt;
+      font-weight: 650;
+      break-after: avoid;
+    }
+    h4 { margin: 15px 0 5px; color: var(--navy); font-size: 11pt; }
+    p { margin: 7px 0 10px; }
+    ul, ol { margin: 7px 0 12px; padding-left: 23px; }
+    li { margin: 4px 0; padding-left: 2px; }
+    .lead { color: #405362; font-size: 12pt; }
+    .small { color: var(--muted); font-size: 9pt; }
+    .toc {
+      margin: 10px 0 24px;
+      padding: 17px 20px;
+      border-left: 4px solid var(--gold);
+      background: var(--pale);
+    }
+    .toc h2 { margin: 0 0 9px; padding: 0; border: 0; font-size: 15pt; }
+    .toc ol { margin-bottom: 0; columns: 2; column-gap: 30px; }
+    .toc li { break-inside: avoid; }
+    .callout {
+      margin: 14px 0;
+      padding: 12px 15px;
+      border: 1px solid #d5e1e8;
+      border-left: 4px solid var(--blue);
+      background: #f5f8fa;
+      break-inside: avoid;
+    }
+    .callout strong { color: var(--navy); }
+    .callout.caution { border-left-color: var(--gold); background: #fbf8f1; }
+    .callout.success { border-left-color: #4c8068; background: #f3f8f4; }
+    table {
+      width: 100%;
+      margin: 11px 0 16px;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+      break-inside: avoid;
+    }
+    th, td { padding: 8px 9px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--navy); background: #edf3f6; font-weight: 650; }
+    tr { break-inside: avoid; }
+    .steps { counter-reset: step; list-style: none; padding-left: 0; }
+    .steps > li {
+      position: relative;
+      min-height: 32px;
+      margin: 0 0 10px;
+      padding: 0 0 0 42px;
+      break-inside: avoid;
+    }
+    .steps > li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--blue);
+      font-size: 10pt;
+      font-weight: 700;
+    }
+    .tag {
+      display: inline-block;
+      padding: 1px 6px;
+      border: 1px solid #b9cad5;
+      border-radius: 3px;
+      color: var(--navy);
+      background: #f5f8fa;
+      font-size: 9pt;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .screen-figure {
+      margin: 15px 0 20px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: #f7f9fa;
+      break-inside: avoid;
+    }
+    .screen-figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid #cbd4da;
+      background: #f7f7f7;
+    }
+    .screen-figure figcaption {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 9pt;
+    }
+    .screen-figure figcaption strong { color: var(--navy); }
+    .section { scroll-margin-top: 14px; }
+    .page-break { break-before: page; }
+    .doc-control td:first-child { width: 31%; font-weight: 650; color: var(--navy); }
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 9px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 8.5pt;
+    }
+    @media (max-width: 700px) {
+      body { background: var(--white); }
+      .document { margin: 0; box-shadow: none; }
+      .cover { min-height: 100svh; padding: 28px 24px; }
+      h1 { font-size: 28pt; }
+      .content { padding: 22px 24px; }
+      .toc ol { columns: 1; }
+      table { font-size: 9pt; }
+      th, td { padding: 6px; }
+    }
+    @page { size: A4; margin: 16mm 17mm 17mm; }
+    @media print {
+      body { background: white; font-size: 10pt; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .document { width: auto; margin: 0; box-shadow: none; }
+      .cover {
+        width: 100%;
+        min-height: 265mm;
+        margin: -16mm -17mm 0;
+        padding: 24mm 22mm 18mm;
+        break-after: page;
+      }
+      .content { padding: 0; }
+      .docbar { margin-top: 0; }
+      h2 { margin-top: 23px; font-size: 17pt; }
+      h3 { margin-top: 17px; }
+      a { color: inherit; text-decoration: none; }
+      .toc a::after { content: ""; }
+      .page-break { break-before: page; }
+    }
+  </style>
+</head>
+<body>
+  <main class="document">
+    <section class="cover" aria-label="Portada">
+      <div class="identity">
+        <span class="identity-mark" aria-hidden="true">OAJ</span>
+        <span>OAJ · Herramienta institucional</span>
+      </div>
+      <div class="cover-main">
+        <div class="eyebrow">Manual de usuario</div>
+        <h1>Muteador y desenfoque de video</h1>
+        <p class="cover-subtitle">Guía para procesar videos, silenciar segmentos, aplicar desenfoque selectivo y generar versiones comprimidas.</p>
+        <div class="cover-rule"></div>
+        <dl class="cover-meta">
+          <div><dt>Aplicativo</dt><dd>Editvideo</dd></div>
+          <div><dt>Versión documentada</dt><dd>1.0.2</dd></div>
+          <div><dt>Tipo de documento</dt><dd>Guía de operación para personas usuarias</dd></div>
+          <div><dt>Edición</dt><dd>1.0 · Octubre de 2026</dd></div>
+        </dl>
+      </div>
+      <div class="cover-foot">
+        <span>Documento de apoyo al usuario</span>
+        <span>Uso institucional</span>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="docbar">
+        <span>OAJ · Editvideo</span>
+        <span>Manual de usuario · Versión 1.0.2</span>
+      </div>
+
+      <section class="section" id="control-documental">
+        <h2>Control documental</h2>
+        <table class="doc-control">
+          <tbody>
+            <tr><td>Nombre</td><td>Manual de usuario del aplicativo Muteador y desenfoque de video (Editvideo)</td></tr>
+            <tr><td>Identificador</td><td>MU-EDITVIDEO-01</td></tr>
+            <tr><td>Versión del documento</td><td>1.0</td></tr>
+            <tr><td>Versión del aplicativo</td><td>1.0.2</td></tr>
+            <tr><td>Fecha de emisión</td><td>Octubre de 2026</td></tr>
+            <tr><td>Personas destinatarias</td><td>Personal autorizado que necesite preparar videos para su uso institucional.</td></tr>
+            <tr><td>Propósito</td><td>Describir el uso básico, las opciones de procesamiento, las validaciones y la atención inicial de incidencias.</td></tr>
+          </tbody>
+        </table>
+        <p class="small">La interfaz puede presentar variaciones menores entre versiones o sistemas operativos. Si la aplicación instalada muestra opciones diferentes, prevalece la interfaz disponible y la orientación del área responsable.</p>
+      </section>
+
+      <nav class="toc" aria-label="Contenido">
+        <h2>Contenido</h2>
+        <ol>
+          <li><a href="#proposito">Propósito y alcance</a></li>
+          <li><a href="#requisitos">Antes de comenzar</a></li>
+          <li><a href="#interfaz">Conozca la pantalla</a></li>
+          <li><a href="#pantallas">Pantallas de referencia</a></li>
+          <li><a href="#procedimiento">Procedimiento de trabajo</a></li>
+          <li><a href="#rangos">Rangos de tiempo y efectos</a></li>
+          <li><a href="#compresion">Compresión del video</a></li>
+          <li><a href="#actualizaciones">Actualizaciones</a></li>
+          <li><a href="#problemas">Solución de problemas</a></li>
+          <li><a href="#buenas-practicas">Buenas prácticas</a></li>
+          <li><a href="#glosario">Glosario</a></li>
+        </ol>
+      </nav>
+
+      <section class="section" id="proposito">
+        <h2>1. Propósito y alcance</h2>
+        <p class="lead">Editvideo es una aplicación de escritorio para producir una copia procesada de un archivo de video. Permite intervenir segmentos concretos sin modificar el archivo original.</p>
+        <p>En uno o varios rangos se puede silenciar el audio, desenfocar la imagen o aplicar ambos efectos. También se puede activar una opción independiente para volver a codificar y comprimir todo el video.</p>
+        <div class="callout">
+          <strong>Importante:</strong> el aplicativo no es un editor multipista ni permite previsualizar el material dentro de la interfaz. La selección de los tiempos de inicio y fin se realiza con base en la duración y en la revisión previa del video mediante un reproductor autorizado.
+        </div>
+        <p>El aplicativo crea el resultado en la ruta indicada por la persona usuaria. La operación no sustituye las reglas institucionales de clasificación, protección, almacenamiento o circulación del material audiovisual.</p>
+      </section>
+
+      <section class="section" id="requisitos">
+        <h2>2. Antes de comenzar</h2>
+        <ul>
+          <li>Utilice la distribución institucional de la aplicación correspondiente a su sistema operativo.</li>
+          <li>Confirme que tiene permiso para acceder al video de origen y a la carpeta donde guardará el resultado.</li>
+          <li>Revise el video de origen en un reproductor y anote con precisión los tiempos que deberá tratar.</li>
+          <li>Reserve espacio de almacenamiento suficiente para el video de salida. La duración, resolución y codificación influyen en el tiempo y el tamaño final.</li>
+          <li>Conserve el original hasta revisar y aprobar el resultado.</li>
+        </ul>
+        <p>La distribución de escritorio incorpora o localiza FFmpeg y FFprobe, componentes que se utilizan para leer la duración y procesar el video. Si la aplicación informa que no están disponibles, consulte la sección <a href="#problemas">Solución de problemas</a>.</p>
+        <table>
+          <thead><tr><th>Elemento</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td>Entrada disponible en el selector</td><td>MP4, MOV, MKV, AVI, WMV y M4V. La lectura efectiva también depende de que FFmpeg pueda interpretar el archivo y sus códecs.</td></tr>
+            <tr><td>Formatos sugeridos para salida</td><td>MP4, MKV o MOV. Elija una extensión compatible con el contenedor y los códecs que resulten del procesamiento.</td></tr>
+            <tr><td>Conexión a Internet</td><td>No es necesaria para procesar videos. Se requiere para consultar o descargar actualizaciones.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="interfaz">
+        <h2>3. Conozca la pantalla</h2>
+        <table>
+          <thead><tr><th>Área o control</th><th>Para qué sirve</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag">Entrada</span> · <span class="tag">Buscar...</span></td><td>Indica el video de origen que se va a procesar y permite localizarlo.</td></tr>
+            <tr><td><span class="tag">Salida</span> · <span class="tag">Guardar como...</span></td><td>Indica la ubicación y el nombre del nuevo video.</td></tr>
+            <tr><td>Rangos y efectos</td><td>Lista de segmentos con campos de inicio y fin, y casillas <span class="tag">Mutear</span> y <span class="tag">Desenfocar</span>.</td></tr>
+            <tr><td><span class="tag">+ Agregar</span></td><td>Añade una fila para otro segmento.</td></tr>
+            <tr><td><span class="tag">Limpiar</span></td><td>Elimina los rangos actuales y deja una fila vacía.</td></tr>
+            <tr><td><span class="tag">Guardar</span></td><td>Guarda localmente los tiempos y efectos de los rangos para volver a cargarlos al iniciar la aplicación.</td></tr>
+            <tr><td>Renderizar y comprimir video de salida</td><td>Activa una nueva codificación de todo el video en MP4 para reducir el tamaño. Está desactivada de forma predeterminada.</td></tr>
+            <tr><td><span class="tag">Procesar video</span></td><td>Valida los datos e inicia la generación del archivo de salida.</td></tr>
+            <tr><td>Barra de progreso y estado</td><td>Muestra el avance, los mensajes del proceso, la ruta generada y el resumen de tamaño al finalizar.</td></tr>
+            <tr><td><span class="tag">Buscar actualización</span></td><td>Consulta manualmente si hay una versión posterior disponible.</td></tr>
+            <tr><td><span class="tag">Salir</span></td><td>Cierra la aplicación. Si hay un procesamiento activo, solicita confirmar si se desea cancelarlo.</td></tr>
+          </tbody>
+        </table>
+        <p>Al seleccionar un video, la aplicación intenta mostrar su duración en el área de estado. Si no se ha indicado una ruta de salida, propone un nombre basado en el archivo de entrada.</p>
+      </section>
+
+      <section class="section page-break" id="pantallas">
+        <h2>Pantallas de referencia</h2>
+        <p>Las siguientes ilustraciones muestran la disposición de los controles y los mensajes habituales en la versión 1.0.2. Son <strong>representaciones esquemáticas de la interfaz</strong>, elaboradas con fines de orientación; no son capturas fotográficas del escritorio. Los nombres y tiempos de ejemplo son ficticios.</p>
+
+        <figure class="screen-figure">
+          <svg viewBox="0 0 900 530" role="img" aria-labelledby="screen1-title screen1-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="screen1-title">Pantalla principal de Editvideo</title>
+            <desc id="screen1-desc">Ventana esquemática con el menú Ayuda desplegado y la opción para abrir el manual, selección de archivos, opción de compresión, rango vacío y controles de procesamiento.</desc>
+            <rect width="900" height="500" fill="#f6f6f6"/>
+            <rect width="900" height="31" fill="#e8e8e8"/>
+            <rect x="13" y="8" width="15" height="15" rx="3" fill="#245b82"/>
+            <text x="21" y="19" text-anchor="middle" font-family="Segoe UI,Arial" font-size="8" font-weight="700" fill="#fff">E</text>
+            <text x="38" y="20" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Muteador y desenfoque de video v1.0.2</text>
+            <text x="838" y="20" font-family="Segoe UI,Arial" font-size="13" fill="#444">—　□　×</text>
+            <rect y="31" width="900" height="22" fill="#f0f0f0"/>
+            <text x="15" y="47" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Ayuda</text>
+            <g transform="translate(0 22)">
+            <text x="28" y="66" font-family="Segoe UI,Arial" font-size="21" font-weight="700" fill="#183653">Muteo y desenfoque por rangos</text>
+            <text x="335" y="65" font-family="Segoe UI,Arial" font-size="12" fill="#596773">Silencia, desenfoca o solo comprime tu video</text>
+            <rect x="662" y="43" width="108" height="29" rx="3" fill="#f5f5f5" stroke="#bfc8ce"/>
+            <text x="716" y="62" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#27333c">Manual de usuario</text>
+            <rect x="778" y="43" width="99" height="29" rx="3" fill="#f5f5f5" stroke="#bfc8ce"/>
+            <text x="827" y="62" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#27333c">Buscar actualización</text>
+            <rect x="25" y="87" width="850" height="104" rx="4" fill="#f8f8f8" stroke="#aeb8bf"/>
+            <rect x="41" y="80" width="49" height="16" fill="#f6f6f6"/>
+            <text x="45" y="92" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Archivos</text>
+            <text x="43" y="123" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Entrada</text>
+            <rect x="114" y="105" width="633" height="27" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <rect x="758" y="105" width="99" height="27" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="807" y="123" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Buscar...</text>
+            <text x="43" y="163" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Salida</text>
+            <rect x="114" y="145" width="633" height="27" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <rect x="758" y="145" width="99" height="27" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="807" y="163" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Guardar como...</text>
+            <rect x="28" y="207" width="14" height="14" rx="2" fill="#fff" stroke="#75828b"/>
+            <text x="50" y="219" font-family="Segoe UI,Arial" font-size="13" font-weight="600" fill="#303030">Renderizar y comprimir video de salida</text>
+            <text x="380" y="219" font-family="Segoe UI,Arial" font-size="10" fill="#66727a">H.264 CRF 20 · AAC hasta 192k · MP4</text>
+            <rect x="25" y="241" width="850" height="175" rx="4" fill="#f8f8f8" stroke="#aeb8bf"/>
+            <rect x="41" y="234" width="173" height="16" fill="#f6f6f6"/>
+            <text x="45" y="246" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Rangos y efectos (opcional)</text>
+            <rect x="42" y="260" width="84" height="27" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="84" y="278" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">+ Agregar</text>
+            <rect x="133" y="260" width="70" height="27" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="168" y="278" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Limpiar</text>
+            <rect x="210" y="260" width="70" height="27" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="245" y="278" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Guardar</text>
+            <text x="856" y="278" text-anchor="end" font-family="Segoe UI,Arial" font-size="9" fill="#66727a">Vacío = video completo sin efectos</text>
+            <rect x="48" y="301" width="25" height="24" rx="3" fill="#e8f0f6"/>
+            <text x="60" y="317" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" font-weight="700" fill="#245b82">1</text>
+            <text x="88" y="317" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Inicio</text>
+            <rect x="128" y="298" width="103" height="29" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="179" y="317" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#82909a">00:00.000</text>
+            <text x="245" y="317" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Fin</text>
+            <rect x="275" y="298" width="103" height="29" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="326" y="317" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#82909a">00:00.000</text>
+            <rect x="401" y="305" width="13" height="13" rx="2" fill="#fff" stroke="#75828b"/>
+            <text x="421" y="317" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Mutear</text>
+            <rect x="487" y="305" width="13" height="13" rx="2" fill="#fff" stroke="#75828b"/>
+            <text x="507" y="317" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Desenfocar</text>
+            <text x="28" y="446" font-family="Segoe UI,Arial" font-size="11" fill="#66727a">Listo</text>
+            <rect x="28" y="425" width="790" height="11" rx="4" fill="#e2e7ea"/>
+            <text x="839" y="435" font-family="Segoe UI,Arial" font-size="11" fill="#303030">0%</text>
+            <rect x="28" y="458" width="143" height="31" rx="4" fill="#245b82"/>
+            <text x="99" y="478" text-anchor="middle" font-family="Segoe UI,Arial" font-size="12" font-weight="700" fill="#fff">Procesar video</text>
+            <rect x="808" y="458" width="67" height="31" rx="4" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="841" y="478" text-anchor="middle" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Salir</text>
+            </g>
+            <g>
+              <rect x="8" y="53" width="190" height="51" rx="2" fill="#fff" stroke="#9ca8b0"/>
+              <rect x="9" y="54" width="188" height="24" fill="#eaf1f5"/>
+              <text x="19" y="70" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Manual de usuario</text>
+              <text x="19" y="94" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Buscar actualización</text>
+            </g>
+          </svg>
+          <figcaption><strong>Figura 1. Pantalla principal.</strong> El manual se abre desde el botón visible o desde <strong>Ayuda → Manual de usuario</strong>. En el mismo menú se encuentra la consulta manual de actualizaciones.</figcaption>
+        </figure>
+
+        <figure class="screen-figure">
+          <svg viewBox="0 0 900 466" role="img" aria-labelledby="screen2-title screen2-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="screen2-title">Pantalla con rangos y efectos seleccionados</title>
+            <desc id="screen2-desc">Ejemplo de dos rangos: el primero silencia el audio, y el segundo desenfoca la imagen.</desc>
+            <rect width="900" height="440" fill="#f6f6f6"/>
+            <rect width="900" height="31" fill="#e8e8e8"/>
+            <rect x="13" y="8" width="15" height="15" rx="3" fill="#245b82"/>
+            <text x="21" y="19" text-anchor="middle" font-family="Segoe UI,Arial" font-size="8" font-weight="700" fill="#fff">E</text>
+            <text x="38" y="20" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Muteador y desenfoque de video v1.0.2</text>
+            <text x="838" y="20" font-family="Segoe UI,Arial" font-size="13" fill="#444">—　□　×</text>
+            <rect y="31" width="900" height="22" fill="#f0f0f0"/>
+            <text x="15" y="47" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Ayuda</text>
+            <g transform="translate(0 22)">
+            <text x="28" y="66" font-family="Segoe UI,Arial" font-size="21" font-weight="700" fill="#183653">Muteo y desenfoque por rangos</text>
+            <rect x="739" y="43" width="108" height="29" rx="3" fill="#f5f5f5" stroke="#bfc8ce"/>
+            <text x="793" y="62" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#27333c">Manual de usuario</text>
+            <rect x="25" y="86" width="850" height="104" rx="4" fill="#f8f8f8" stroke="#aeb8bf"/>
+            <rect x="41" y="79" width="49" height="16" fill="#f6f6f6"/>
+            <text x="45" y="91" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Archivos</text>
+            <text x="43" y="121" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Entrada</text>
+            <rect x="114" y="103" width="633" height="27" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="121" y="121" font-family="Segoe UI,Arial" font-size="11" fill="#303030">C:\Videos\video_revision.mp4</text>
+            <rect x="758" y="103" width="99" height="27" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="807" y="121" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Buscar...</text>
+            <text x="43" y="161" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Salida</text>
+            <rect x="114" y="143" width="633" height="27" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="121" y="161" font-family="Segoe UI,Arial" font-size="11" fill="#303030">C:\Videos\video_revision_editado.mp4</text>
+            <rect x="758" y="143" width="99" height="27" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="807" y="161" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Guardar como...</text>
+            <rect x="28" y="205" width="14" height="14" rx="2" fill="#fff" stroke="#75828b"/>
+            <text x="50" y="217" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Renderizar y comprimir video de salida</text>
+            <rect x="25" y="237" width="850" height="137" rx="4" fill="#f8f8f8" stroke="#aeb8bf"/>
+            <rect x="41" y="230" width="173" height="16" fill="#f6f6f6"/>
+            <text x="45" y="242" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Rangos y efectos (opcional)</text>
+            <rect x="42" y="254" width="84" height="25" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="84" y="271" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10" fill="#303030">+ Agregar</text>
+            <rect x="133" y="254" width="70" height="25" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="168" y="271" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Limpiar</text>
+            <rect x="210" y="254" width="70" height="25" rx="3" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="245" y="271" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Guardar</text>
+            <text x="850" y="271" text-anchor="end" font-family="Segoe UI,Arial" font-size="9" fill="#66727a">Formatos: 12.5 · 00:12.500 · 01:02:03.250</text>
+            <text x="58" y="308" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" font-weight="700" fill="#245b82">1</text>
+            <text x="87" y="308" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Inicio</text>
+            <rect x="127" y="289" width="93" height="25" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="173" y="306" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10" fill="#303030">00:12.500</text>
+            <text x="232" y="308" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Fin</text>
+            <rect x="257" y="289" width="93" height="25" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="303" y="306" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10" fill="#303030">00:18.000</text>
+            <rect x="367" y="295" width="13" height="13" rx="2" fill="#245b82" stroke="#245b82"/>
+            <path d="M370 301l3 3 5-6" fill="none" stroke="#fff" stroke-width="1.5"/>
+            <text x="388" y="307" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Mutear</text>
+            <rect x="455" y="295" width="13" height="13" rx="2" fill="#fff" stroke="#75828b"/>
+            <text x="476" y="307" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Desenfocar</text>
+            <text x="58" y="345" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" font-weight="700" fill="#245b82">2</text>
+            <text x="87" y="345" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Inicio</text>
+            <rect x="127" y="326" width="93" height="25" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="173" y="343" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10" fill="#303030">01:02.000</text>
+            <text x="232" y="345" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Fin</text>
+            <rect x="257" y="326" width="93" height="25" rx="2" fill="#fff" stroke="#aeb8bf"/>
+            <text x="303" y="343" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10" fill="#303030">01:08.000</text>
+            <rect x="367" y="332" width="13" height="13" rx="2" fill="#fff" stroke="#75828b"/>
+            <text x="388" y="344" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Mutear</text>
+            <rect x="455" y="332" width="13" height="13" rx="2" fill="#245b82" stroke="#245b82"/>
+            <path d="M458 338l3 3 5-6" fill="none" stroke="#fff" stroke-width="1.5"/>
+            <text x="476" y="344" font-family="Segoe UI,Arial" font-size="10" fill="#303030">Desenfocar</text>
+            <text x="28" y="405" font-family="Segoe UI,Arial" font-size="11" fill="#66727a">Duración del video: 02:15.420. Los rangos deben estar dentro de este tiempo.</text>
+            <rect x="28" y="383" width="790" height="10" rx="4" fill="#e2e7ea"/>
+            <text x="839" y="392" font-family="Segoe UI,Arial" font-size="10" fill="#303030">0%</text>
+            <rect x="28" y="413" width="143" height="25" rx="4" fill="#245b82"/>
+            <text x="99" y="430" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" font-weight="700" fill="#fff">Procesar video</text>
+            <rect x="808" y="413" width="67" height="25" rx="4" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="841" y="430" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Salir</text>
+            </g>
+          </svg>
+          <figcaption><strong>Figura 2. Ejemplo de configuración.</strong> La barra Ayuda y el botón de acceso al manual siguen disponibles mientras se configuran los rangos. El primer rango silencia el audio; el segundo desenfoca la imagen. Los valores son ilustrativos y deben sustituirse por los tiempos que correspondan al video real.</figcaption>
+        </figure>
+
+        <figure class="screen-figure">
+          <svg viewBox="0 0 900 386" role="img" aria-labelledby="screen3-title screen3-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="screen3-title">Estado de procesamiento completado</title>
+            <desc id="screen3-desc">Ventana de la aplicación con barra de progreso completa, estado de finalización y confirmación de video generado.</desc>
+            <rect width="900" height="360" fill="#f6f6f6"/>
+            <rect width="900" height="31" fill="#e8e8e8"/>
+            <rect x="13" y="8" width="15" height="15" rx="3" fill="#245b82"/>
+            <text x="21" y="19" text-anchor="middle" font-family="Segoe UI,Arial" font-size="8" font-weight="700" fill="#fff">E</text>
+            <text x="38" y="20" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Muteador y desenfoque de video v1.0.2</text>
+            <rect y="31" width="900" height="22" fill="#f0f0f0"/>
+            <text x="15" y="47" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Ayuda</text>
+            <g transform="translate(0 22)">
+            <text x="28" y="68" font-family="Segoe UI,Arial" font-size="21" font-weight="700" fill="#183653">Muteo y desenfoque por rangos</text>
+            <rect x="739" y="44" width="108" height="29" rx="3" fill="#f5f5f5" stroke="#bfc8ce"/>
+            <text x="793" y="63" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11" fill="#27333c">Manual de usuario</text>
+            <rect x="28" y="127" width="790" height="18" rx="6" fill="#e2e7ea"/>
+            <rect x="28" y="127" width="790" height="18" rx="6" fill="#43816b"/>
+            <text x="839" y="141" font-family="Segoe UI,Arial" font-size="12" font-weight="700" fill="#303030">100%</text>
+            <text x="28" y="169" font-family="Segoe UI,Arial" font-size="12" fill="#315d49">Completado: C:\Videos\video_revision_editado.mp4</text>
+            <text x="28" y="190" font-family="Segoe UI,Arial" font-size="11" fill="#596773">Tamaño: 24.8 MB  ·  Original: 41.2 MB  ·  Reducción: 39.8%</text>
+            <rect x="28" y="225" width="143" height="31" rx="4" fill="#245b82"/>
+            <text x="99" y="245" text-anchor="middle" font-family="Segoe UI,Arial" font-size="12" font-weight="700" fill="#fff">Procesar video</text>
+            <rect x="808" y="225" width="67" height="31" rx="4" fill="#f4f4f4" stroke="#aeb8bf"/>
+            <text x="841" y="245" text-anchor="middle" font-family="Segoe UI,Arial" font-size="12" fill="#303030">Salir</text>
+            <rect x="281" y="270" width="338" height="70" rx="5" fill="#fff" stroke="#8998a2" filter="url(#shadow)"/>
+            <rect x="281" y="270" width="338" height="25" rx="5" fill="#f0f2f3"/>
+            <text x="296" y="287" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Éxito</text>
+            <circle cx="307" cy="317" r="11" fill="#43816b"/>
+            <path d="M301 317l4 4 8-9" fill="none" stroke="#fff" stroke-width="2"/>
+            <text x="327" y="313" font-family="Segoe UI,Arial" font-size="11" fill="#303030">Video generado:</text>
+            <text x="327" y="330" font-family="Segoe UI,Arial" font-size="10" fill="#596773">Revise el archivo de salida antes de utilizarlo.</text>
+            <defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#183653" flood-opacity=".18"/></filter></defs>
+            </g>
+          </svg>
+          <figcaption><strong>Figura 3. Procesamiento completado.</strong> La aplicación confirma la ruta y el resumen de tamaños. La persona usuaria debe reproducir y validar el archivo antes de usarlo.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section page-break" id="procedimiento">
+        <h2>4. Procedimiento de trabajo</h2>
+        <ol class="steps">
+          <li><strong>Abra el aplicativo.</strong> Espere a que aparezca la pantalla principal. La aplicación puede iniciar una consulta automática de actualizaciones, que no es necesaria para procesar el video.</li>
+          <li><strong>Seleccione el video de entrada.</strong> En <span class="tag">Entrada</span>, elija <span class="tag">Buscar...</span> y localice el archivo que desea tratar. Compruebe que la duración aparezca en el estado de la aplicación.</li>
+          <li><strong>Defina el resultado.</strong> En <span class="tag">Salida</span>, conserve la ruta propuesta o elija <span class="tag">Guardar como...</span> para especificar carpeta y nombre. La salida debe estar en una ubicación distinta al archivo original.</li>
+          <li><strong>Registre los segmentos necesarios.</strong> Para cada tramo, indique un tiempo de inicio y otro de fin. Seleccione <span class="tag">Mutear</span>, <span class="tag">Desenfocar</span> o ambas opciones según corresponda.</li>
+          <li><strong>Decida si necesita comprimir.</strong> Marque la opción de renderizado y compresión solo si desea convertir el video completo a MP4. Esta decisión es independiente de los efectos aplicados en los rangos.</li>
+          <li><strong>Inicie el procesamiento.</strong> Seleccione <span class="tag">Procesar video</span>. La aplicación valida los datos antes de empezar y muestra el avance.</li>
+          <li><strong>Espere la confirmación.</strong> Durante el proceso, los controles quedan temporalmente inhabilitados. No cierre la aplicación ni apague el equipo.</li>
+          <li><strong>Revise el archivo generado.</strong> Al finalizar, el aplicativo confirma la ruta y muestra el tamaño de origen y de salida. Abra el resultado con un reproductor autorizado y verifique imagen, audio, tiempos y duración.</li>
+        </ol>
+        <div class="callout caution">
+          <strong>Si cancela o ocurre un error:</strong> no use un archivo de salida incompleto. Compruebe si quedó un archivo parcial en la ruta de destino; elimínelo solo cuando tenga certeza de que no corresponde a otro trabajo. Después, corrija la causa y vuelva a procesar desde el video original.
+        </div>
+      </section>
+
+      <section class="section" id="rangos">
+        <h2>5. Rangos de tiempo y efectos</h2>
+        <h3>5.1 Formatos de tiempo</h3>
+        <p>Los tiempos se cuentan desde el inicio del video. Se aceptan segundos, minutos y segundos, u horas, minutos y segundos. Puede usar punto o coma como separador decimal, con hasta tres cifras decimales.</p>
+        <table>
+          <thead><tr><th>Formato</th><th>Ejemplo</th><th>Interpretación</th></tr></thead>
+          <tbody>
+            <tr><td>Segundos</td><td><code>12.5</code> o <code>12,5</code></td><td>12 segundos y medio.</td></tr>
+            <tr><td>Minutos:segundos</td><td><code>00:12.500</code></td><td>12 segundos y 500 milisegundos.</td></tr>
+            <tr><td>Horas:minutos:segundos</td><td><code>01:02:03.250</code></td><td>1 hora, 2 minutos y 3.250 segundos.</td></tr>
+          </tbody>
+        </table>
+        <h3>5.2 Reglas de captura</h3>
+        <ul>
+          <li>Complete ambos campos del rango. Si deja ambos vacíos, esa fila no se procesa; si completa solo uno, la aplicación marca un error.</li>
+          <li>El tiempo de fin debe ser mayor que el tiempo de inicio.</li>
+          <li>Los rangos deben estar dentro de la duración del video y no pueden traslaparse. Los rangos consecutivos sí están permitidos.</li>
+          <li>Ordene visualmente las filas por tiempo para facilitar su revisión. La aplicación ordena internamente los rangos al procesar.</li>
+          <li>Un rango sin efectos seleccionados es válido; simplemente no silencia ni desenfoca ese tramo.</li>
+          <li>Para eliminar una fila, use el control con una “X” al final de la fila. Si elimina todas, queda una fila vacía disponible.</li>
+        </ul>
+        <table>
+          <thead><tr><th>Selección del rango</th><th>Resultado en el segmento</th></tr></thead>
+          <tbody>
+            <tr><td>Mutear</td><td>Silencia el audio durante el intervalo indicado. El audio fuera de ese intervalo se conserva.</td></tr>
+            <tr><td>Desenfocar</td><td>Aplica desenfoque intenso a la imagen durante el intervalo indicado. La imagen fuera de ese intervalo se conserva sin ese efecto.</td></tr>
+            <tr><td>Ambas casillas</td><td>Silencia el audio y desenfoca la imagen durante el mismo intervalo.</td></tr>
+            <tr><td>Ninguna casilla</td><td>No aplica muteo ni desenfoque en ese intervalo.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <strong>Persistencia de rangos:</strong> el botón <span class="tag">Guardar</span> almacena las filas y sus efectos en un archivo local de configuración para reutilizarlos en el siguiente inicio. No guarda el video, las rutas de entrada o salida ni la opción de compresión. Revise los rangos cargados antes de cada trabajo, especialmente si selecciona otro video.
+        </div>
+      </section>
+
+      <section class="section" id="compresion">
+        <h2>6. Compresión del video</h2>
+        <p>La opción <strong>Renderizar y comprimir video de salida</strong> vuelve a codificar el video completo, no únicamente los rangos que tengan efectos. El resultado se genera como MP4 con video H.264 y audio AAC; la configuración prioriza una salida de menor tamaño, aunque el resultado depende del contenido y de la codificación de origen.</p>
+        <ul>
+          <li>Cuando se activa, la aplicación ajusta la extensión del nombre de salida a <code>.mp4</code>.</li>
+          <li>La opción no está activada de manera predeterminada.</li>
+          <li>La compresión puede aumentar el tiempo de procesamiento. El audio y la imagen se vuelven a codificar.</li>
+          <li>Sin compresión, los flujos que no requieren cambios suelen copiarse sin volver a codificar; un flujo al que se aplique muteo o desenfoque sí requiere el tratamiento técnico correspondiente.</li>
+          <li>El tamaño final no está garantizado: puede ser menor o mayor según las características del original.</li>
+        </ul>
+        <div class="callout caution">
+          <strong>Calidad:</strong> la compresión puede cambiar la calidad perceptible y no sustituye una revisión del resultado. Si se requiere conservar la máxima fidelidad, mantenga desactivada la opción y revise el archivo de salida antes de utilizarlo.
+        </div>
+      </section>
+
+      <section class="section" id="actualizaciones">
+        <h2>7. Actualizaciones</h2>
+        <p>Al iniciar, el aplicativo puede consultar si existe una versión nueva. También puede solicitar la consulta en cualquier momento con <span class="tag">Buscar actualización</span>.</p>
+        <ol>
+          <li>Si la aplicación indica que ya cuenta con la versión más reciente, no se requiere ninguna acción.</li>
+          <li>Si detecta una versión nueva, revise el número de versión y las notas disponibles antes de continuar.</li>
+          <li>Confirme la descarga únicamente cuando esté de acuerdo. En las instalaciones que admiten actualización integrada, la aplicación se cerrará y volverá a abrir después de instalarla.</li>
+          <li>En las plataformas donde no se realiza la instalación automática, se abrirá la descarga en el navegador. Siga el procedimiento institucional para reemplazar o reinstalar la aplicación.</li>
+        </ol>
+        <p>La consulta y la descarga requieren acceso a la red institucional o a Internet, según la configuración del equipo. Si la consulta manual falla, anote el mensaje y comuníquelo al área de soporte; la comprobación automática puede no mostrar avisos de error de conectividad.</p>
+      </section>
+
+      <section class="section page-break" id="problemas">
+        <h2>8. Solución de problemas</h2>
+        <table>
+          <thead><tr><th>Situación o mensaje</th><th>Acción recomendada</th></tr></thead>
+          <tbody>
+            <tr><td>No se seleccionó un video de entrada.</td><td>Use <span class="tag">Buscar...</span> para seleccionar un archivo existente y accesible.</td></tr>
+            <tr><td>El video de entrada no existe o no se puede leer.</td><td>Confirme la ruta, que la unidad o carpeta esté disponible y que tenga permisos. Intente abrir el original en un reproductor institucional.</td></tr>
+            <tr><td>El tiempo de inicio o fin aparece inválido.</td><td>Use uno de los formatos admitidos, complete ambos valores y confirme que el fin sea posterior al inicio.</td></tr>
+            <tr><td>Los rangos se traslapan.</td><td>Ajuste los intervalos para que no compartan tiempo. Puede hacer que un rango termine exactamente donde inicia el siguiente.</td></tr>
+            <tr><td>Un rango excede la duración del video.</td><td>Verifique la duración mostrada por la aplicación y corrija el inicio o el fin para que ambos estén dentro del video.</td></tr>
+            <tr><td>La salida debe ser distinta a la entrada.</td><td>Elija otro nombre o carpeta. El aplicativo genera un archivo nuevo y no sobrescribe el original deliberadamente.</td></tr>
+            <tr><td>FFmpeg o FFprobe no está disponible.</td><td>Cierre y vuelva a abrir la distribución institucional. Si persiste, no instale componentes por cuenta propia: contacte al área de soporte y reporte el sistema operativo y el mensaje completo.</td></tr>
+            <tr><td>No hay espacio o permiso para crear el archivo.</td><td>Elija una carpeta institucional en la que tenga permisos, compruebe el espacio disponible y vuelva a procesar.</td></tr>
+            <tr><td>El procesamiento termina con error.</td><td>Conserve el original, anote el texto completo del error y comunique el incidente al soporte. Si procede, pruebe con una copia de trabajo autorizada y una carpeta de salida local.</td></tr>
+            <tr><td>La comprobación de actualización falla.</td><td>Verifique la conexión a la red institucional. Si el problema continúa, reporte el mensaje al soporte; puede continuar trabajando con la versión instalada si el aplicativo permite hacerlo.</td></tr>
+            <tr><td>El resultado no corresponde a lo esperado.</td><td>Abra el archivo final y revise los tiempos, los rangos guardados, las casillas seleccionadas y la opción de compresión. Repita el trabajo desde el original si hace falta.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout success">
+          <strong>Datos útiles para solicitar soporte:</strong> versión del aplicativo, sistema operativo, formato y tamaño aproximado del video, mensaje de error exacto, momento en que ocurrió y pasos realizados. Comparta el archivo original o el resultado solo mediante los canales autorizados.
+        </div>
+      </section>
+
+      <section class="section" id="buenas-practicas">
+        <h2>9. Buenas prácticas y responsabilidades</h2>
+        <ul>
+          <li>Trabaje sobre una copia cuando el material original deba preservarse sin alteraciones.</li>
+          <li>Revise con atención los segmentos antes de procesar y reproduzca el resultado completo o las partes pertinentes antes de usarlo o distribuirlo.</li>
+          <li>Use nombres de archivo claros y una carpeta de salida controlada; evite guardar material institucional en ubicaciones personales o no autorizadas.</li>
+          <li>Compruebe que el muteo y el desenfoque cubran íntegramente el contenido que se desea tratar; no asuma que el aplicativo identifica automáticamente información sensible.</li>
+          <li>Proteja la confidencialidad del video durante la selección, el procesamiento, la revisión y el almacenamiento.</li>
+          <li>No interrumpa el equipo ni cierre la aplicación durante el procesamiento, salvo que sea necesario cancelarlo.</li>
+          <li>Documente o reporte cualquier incidencia conforme a los mecanismos institucionales vigentes.</li>
+        </ul>
+        <div class="callout caution">
+          <strong>Responsabilidad de revisión:</strong> el aplicativo ejecuta los efectos en los tiempos indicados; corresponde a la persona usuaria comprobar que el resultado sea adecuado, completo y apto para el uso previsto.
+        </div>
+      </section>
+
+      <section class="section" id="glosario">
+        <h2>10. Glosario</h2>
+        <table>
+          <thead><tr><th>Término</th><th>Definición</th></tr></thead>
+          <tbody>
+            <tr><td>Rango</td><td>Intervalo temporal delimitado por un inicio y un fin dentro del video.</td></tr>
+            <tr><td>Muteo</td><td>Silenciamiento del audio durante un rango determinado.</td></tr>
+            <tr><td>Desenfoque</td><td>Efecto que difumina la imagen durante el rango seleccionado.</td></tr>
+            <tr><td>Renderizado</td><td>Proceso de generación del archivo de video de salida a partir del original y de las opciones configuradas.</td></tr>
+            <tr><td>Compresión</td><td>Codificación del video y el audio para generar un archivo MP4 con tamaño potencialmente menor.</td></tr>
+            <tr><td>MP4 / H.264 / AAC</td><td>Contenedor y códecs empleados para la salida cuando está activa la opción de compresión.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <p class="footer-note">Fin del manual. Documento de apoyo al usuario para Editvideo, versión 1.0.2. Para asuntos de permisos, distribución, protección de información o soporte técnico, siga los procedimientos institucionales aplicables.</p>
+    </section>
+  </main>
+</body>
+</html>
